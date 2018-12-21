@@ -15,8 +15,43 @@ jobs:
 
       - run:
           name: build the jekyll site
-          command: REPLACE-ME-WITH-BUILD-COMMAND
+          command: bundle exec jekyll build
 
       - run:
           name: notify build is finished
           command: echo "The build is finished!"
+          
+  testlinks:
+    executor: ci-executor
+    steps:
+      - checkout
+
+      - run:
+          name: build dependencies
+          command: bundle install
+
+      - run:
+          name: build the jekyll site
+          command: bundle exec jekyll build
+
+      - run:
+          name: notify build is finished
+          command: echo "The build is finished!"
+
+      - run:
+          name: run html proofer
+          command: REPLACE-ME-WITH-SCRIPT
+
+      - run:
+          name: notify test is finished
+          command: echo "The test is completed!"
+
+workflows:
+  version: 2.1
+
+  build_and_test:
+    jobs:
+      - build
+      - testlinks:
+          requires:
+            - build
