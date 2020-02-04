@@ -1,1 +1,10 @@
 version: 2.1
+executors:
+  ci-executor:
+    docker:
+      - image: githubtraining/ci-custom:latest
+jobs:
+  build:
+    executor: ci-executor
+    steps:
+      - checkout
